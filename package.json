@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:api": "tsc -b && vite build --outDir ../backend/src/GamingLeague.Api/wwwroot --emptyOutDir",
     "lint": "oxlint",
     "preview": "vite preview"
   },
