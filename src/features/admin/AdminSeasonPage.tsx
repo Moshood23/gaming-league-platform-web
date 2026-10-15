@@ -91,6 +91,7 @@ export function AdminSeasonPage() {
         </div>
       )}
 
+      {s.status !== 'Draft' && <RegistrationsPanel seasonId={s.id} />}
       {s.status !== 'Draft' && s.status !== 'Cancelled' && s.status !== 'Completed' && <StaffPanel seasonId={s.id} />}
 
       {s.status !== 'Cancelled' && s.status !== 'Completed' && (
@@ -168,6 +169,47 @@ function StaffPanel({ seasonId }: { seasonId: string }) {
           Assign
         </button>
       </form>
+    </div>
+  )
+}
+
+interface Registration {
+  userId: string
+  clubName: string
+  status: string
+  confirmedAt: string | null
+  paidKobo: number
+}
+
+function RegistrationsPanel({ seasonId }: { seasonId: string }) {
+  const registrations = useQuery({
+    queryKey: ['season-registrations', seasonId],
+    queryFn: () => api<Registration[]>(`/api/admin/seasons/${seasonId}/registrations`),
+  })
+
+  return (
+    <div className="card">
+      <h2>Players</h2>
+      <FormError error={registrations.error} />
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Club</th>
+            <th>Status</th>
+            <th>Paid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {registrations.data?.map((r) => (
+            <tr key={r.userId}>
+              <td>{r.clubName}</td>
+              <td>{r.status}</td>
+              <td>{formatNaira(r.paidKobo)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {registrations.data?.length === 0 && <p className="hint">Nobody has joined yet.</p>}
     </div>
   )
 }

@@ -337,3 +337,7 @@ button.danger {
 .card.danger {
   border-color: var(--danger);
 }
+
+.notice-success {
+  border-color: var(--success);
+}

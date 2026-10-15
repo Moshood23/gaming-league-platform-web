@@ -1,5 +1,6 @@
 import { useParams } from 'react-router'
 import { FormError } from '../../components/Form'
+import { JoinPanel } from '../registrations/JoinPanel'
 import { formatDateTime, formatNaira } from '../../lib/format'
 import { PrizeTable } from './PrizeSummary'
 import { prizeHeadline, useSeason } from './seasonUtils'
@@ -19,7 +20,8 @@ export function SeasonPage() {
       <h1>
         {s.competitionName} — {s.name}
       </h1>
-      {s.cancelledReason && <p className="form-error">Cancelled: {s.cancelledReason}</p>}
+      {s.cancelledReason && <p className="form-error">Cancelled: {s.cancelledReason}. Everyone who paid is refunded.</p>}
+      <JoinPanel season={s} />
 
       <dl className="facts">
         <dt>Entry fee</dt>

@@ -10,6 +10,8 @@ import { RegisterPage } from '../features/auth/RegisterPage'
 import { ResetPasswordPage } from '../features/auth/ResetPasswordPage'
 import { HomePage } from '../features/home/HomePage'
 import { ProfilePage } from '../features/profile/ProfilePage'
+import { DevCheckoutPage } from '../features/registrations/DevCheckoutPage'
+import { PaymentReturnPage } from '../features/registrations/PaymentReturnPage'
 import { SeasonPage } from '../features/seasons/SeasonPage'
 import { SeasonsPage } from '../features/seasons/SeasonsPage'
 import { Layout } from './Layout'
@@ -30,7 +32,12 @@ export const router = createBrowserRouter([
       { path: '/seasons/:seasonId', element: <SeasonPage /> },
       {
         element: <RequireAuth />,
-        children: [{ path: '/profile', element: <ProfilePage /> }],
+        children: [
+          { path: '/profile', element: <ProfilePage /> },
+          { path: '/payments/:reference', element: <PaymentReturnPage /> },
+          // The fake checkout only exists in development builds.
+          ...(import.meta.env.DEV ? [{ path: '/dev/checkout', element: <DevCheckoutPage /> }] : []),
+        ],
       },
       {
         element: <RequireAuth role="Administrator" />,
