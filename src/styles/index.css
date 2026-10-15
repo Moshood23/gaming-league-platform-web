@@ -513,3 +513,20 @@ textarea {
 .trophy {
   font-size: 1.8rem;
 }
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.tabs a.active {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.champion-list {
+  border-color: var(--accent);
+}

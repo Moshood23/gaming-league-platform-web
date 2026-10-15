@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Field, FormError } from '../../components/Form'
 import { api } from '../../lib/api'
+import { AdminNav } from './AdminNav'
 import { formatDateTime } from '../../lib/format'
 
 interface AdminUser {
@@ -26,6 +27,7 @@ export function AdminUsersPage() {
 
   return (
     <section className="stack">
+      <AdminNav />
       <h1>Users and roles</h1>
       <form
         className="card"

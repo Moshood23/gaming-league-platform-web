@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Field, FormError } from '../../components/Form'
 import { api, ApiError, fieldError } from '../../lib/api'
 import { currentUserKey } from '../auth/useCurrentUser'
+import { PayoutAccountPanel } from '../payouts/PayoutAccountPanel'
 
 interface Profile {
   clubName: string
@@ -34,7 +35,12 @@ export function ProfilePage() {
   if (profile.isError) {
     return <FormError error={profile.error} />
   }
-  return <ProfileForm initial={profile.data} />
+  return (
+    <div className="stack">
+      <ProfileForm initial={profile.data} />
+      {profile.data && <PayoutAccountPanel />}
+    </div>
+  )
 }
 
 function ProfileForm({ initial }: { initial: Profile | null }) {

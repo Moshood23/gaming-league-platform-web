@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { Field, FormError } from '../../components/Form'
 import { api } from '../../lib/api'
+import { AdminNav } from './AdminNav'
 import { formatNaira } from '../../lib/format'
 import { statusLabel, type SeasonSummary } from '../seasons/types'
 
@@ -28,6 +29,7 @@ export function AdminSeasonsPage() {
 
   return (
     <section className="stack">
+      <AdminNav />
       <h1>Competitions and seasons</h1>
 
       {competitions.data?.map((c) => (

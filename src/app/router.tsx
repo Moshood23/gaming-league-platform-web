@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router'
+import { AdminPayoutsPage } from '../features/admin/AdminPayoutsPage'
 import { AdminSeasonPage } from '../features/admin/AdminSeasonPage'
 import { AdminSeasonsPage } from '../features/admin/AdminSeasonsPage'
 import { AdminUsersPage } from '../features/admin/AdminUsersPage'
@@ -53,6 +54,7 @@ export const router = createBrowserRouter([
           { path: '/admin/competitions/:competitionId/new-season', element: <NewSeasonPage /> },
           { path: '/admin/seasons/:seasonId', element: <AdminSeasonPage /> },
           { path: '/admin/users', element: <AdminUsersPage /> },
+          { path: '/admin/payouts', element: <AdminPayoutsPage /> },
         ],
       },
     ],
