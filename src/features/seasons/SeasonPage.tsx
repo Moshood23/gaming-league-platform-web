@@ -1,5 +1,6 @@
 import { useParams } from 'react-router'
 import { FormError } from '../../components/Form'
+import { Announcements } from '../notifications/Announcements'
 import { JoinPanel } from '../registrations/JoinPanel'
 import { SeasonFixtures } from './SeasonFixtures'
 import { formatDateTime, formatNaira } from '../../lib/format'
@@ -23,6 +24,7 @@ export function SeasonPage() {
       </h1>
       {s.cancelledReason && <p className="form-error">Cancelled: {s.cancelledReason}. Everyone who paid is refunded.</p>}
       <JoinPanel season={s} />
+      <Announcements seasonId={s.id} />
 
       <dl className="facts">
         <dt>Entry fee</dt>

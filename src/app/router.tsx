@@ -12,6 +12,7 @@ import { ResetPasswordPage } from '../features/auth/ResetPasswordPage'
 import { HomePage } from '../features/home/HomePage'
 import { MatchPage } from '../features/matches/MatchPage'
 import { ModerationQueuePage } from '../features/moderation/ModerationQueuePage'
+import { NotificationsPage } from '../features/notifications/NotificationsPage'
 import { ProfilePage } from '../features/profile/ProfilePage'
 import { DevCheckoutPage } from '../features/registrations/DevCheckoutPage'
 import { PaymentReturnPage } from '../features/registrations/PaymentReturnPage'
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
         children: [
           { path: '/profile', element: <ProfilePage /> },
           { path: '/payments/:reference', element: <PaymentReturnPage /> },
+          { path: '/notifications', element: <NotificationsPage /> },
           // The fake checkout only exists in development builds.
           ...(import.meta.env.DEV ? [{ path: '/dev/checkout', element: <DevCheckoutPage /> }] : []),
         ],
