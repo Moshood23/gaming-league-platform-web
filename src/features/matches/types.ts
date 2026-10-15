@@ -32,3 +32,56 @@ export const matchStatusLabel: Record<MatchStatus, string> = {
   Finalized: 'Final',
   Void: 'Void',
 }
+
+export type Viewer = 'Public' | 'PlayerA' | 'PlayerB' | 'Moderator'
+export type DisputeCategory = 'WrongScore' | 'Disconnect' | 'NoShow' | 'AccountSharing' | 'Other'
+export type DisputeDecision = 'ConfirmSubmission' | 'SetScore' | 'Replay' | 'Forfeit' | 'DoubleForfeit' | 'Void'
+
+export interface Submission {
+  id: string
+  submittedByUserId: string
+  scoreA: number
+  scoreB: number
+  status: 'Pending' | 'Confirmed' | 'AutoConfirmed' | 'Disputed' | 'Superseded'
+  submittedAt: string
+  confirmationDueAt: string
+}
+
+export interface Evidence {
+  id: string
+  uploadedByUserId: string
+  kind: 'FinalScore' | 'Disconnect' | 'ContactAttempt' | 'Other'
+  createdAt: string
+  submissionId: string | null
+  disputeId: string | null
+}
+
+export interface Dispute {
+  id: string
+  openedByUserId: string | null
+  category: DisputeCategory
+  reason: string
+  status: 'Open' | 'UnderReview' | 'Resolved'
+  assignedModeratorUserId: string | null
+  decision: DisputeDecision | null
+  decisionNote: string | null
+  openedAt: string
+  resolvedAt: string | null
+}
+
+export interface MatchDetail {
+  match: MatchSummary
+  viewer: Viewer
+  confirmationWindowHours: number
+  submissions: Submission[]
+  evidence: Evidence[]
+  disputes: Dispute[]
+}
+
+export const disputeCategoryLabel: Record<DisputeCategory, string> = {
+  WrongScore: 'Wrong score',
+  Disconnect: 'Disconnection',
+  NoShow: 'Opponent did not play',
+  AccountSharing: 'Someone else played',
+  Other: 'Something else',
+}

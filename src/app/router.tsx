@@ -9,6 +9,7 @@ import { LoginPage } from '../features/auth/LoginPage'
 import { RegisterPage } from '../features/auth/RegisterPage'
 import { ResetPasswordPage } from '../features/auth/ResetPasswordPage'
 import { HomePage } from '../features/home/HomePage'
+import { MatchPage } from '../features/matches/MatchPage'
 import { ProfilePage } from '../features/profile/ProfilePage'
 import { DevCheckoutPage } from '../features/registrations/DevCheckoutPage'
 import { PaymentReturnPage } from '../features/registrations/PaymentReturnPage'
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
       { path: '/reset-password', element: <ResetPasswordPage /> },
       { path: '/seasons', element: <SeasonsPage /> },
       { path: '/seasons/:seasonId', element: <SeasonPage /> },
+      { path: '/matches/:matchId', element: <MatchPage /> },
       {
         element: <RequireAuth />,
         children: [

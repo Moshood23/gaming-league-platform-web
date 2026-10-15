@@ -397,3 +397,53 @@ button.danger {
 .status-Disputed {
   color: var(--danger);
 }
+
+textarea {
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.match-title {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.match-title span:last-child {
+  text-align: right;
+}
+
+.match-title .score {
+  font-size: 1.6rem;
+}
+
+.big-score {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.thumbs img {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border);
+}
