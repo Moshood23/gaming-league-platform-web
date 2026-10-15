@@ -1,0 +1,42 @@
+# Serves the built web app and forwards API calls, so visitors see one address and the login cookie works.
+# ${API_URL} is filled in from the environment when the container starts, e.g. http://api:8080 (no trailing slash).
+
+# Keep the original scheme when a hosting load balancer terminates HTTPS in front of this server.
+map $http_x_forwarded_proto $forwarded_proto {
+    default $http_x_forwarded_proto;
+    ''      $scheme;
+}
+
+server {
+    listen 8080;
+    server_tokens off;
+    root /usr/share/nginx/html;
+
+    # Match screenshots: the API allows 5 MB files plus form overhead.
+    client_max_body_size 6m;
+
+    location /api/ {
+        proxy_pass ${API_URL};
+        include /etc/nginx/snippets/proxy.conf;
+    }
+
+    # Paystack calls this; point the Paystack dashboard at https://your-domain/webhooks/payments.
+    location /webhooks/ {
+        proxy_pass ${API_URL};
+        include /etc/nginx/snippets/proxy.conf;
+    }
+
+    # Built files have content hashes in their names, so they can be cached for good.
+    location /assets/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        try_files $uri =404;
+    }
+
+    # Every other address is a page of the web app.
+    location / {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache" always;
+        try_files $uri /index.html;
+    }
+}

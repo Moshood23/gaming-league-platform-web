@@ -1,12 +1,11 @@
 {
-  "name": "gaming-league-frontend",
+  "name": "gaming-league-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:api": "tsc -b && vite build --outDir ../backend/src/GamingLeague.Api/wwwroot --emptyOutDir",
     "lint": "oxlint",
     "preview": "vite preview"
   },
