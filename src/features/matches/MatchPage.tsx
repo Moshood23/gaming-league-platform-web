@@ -37,7 +37,7 @@ export function MatchPage() {
 
       {isPlayer && open && <ArrangeMatch detail={d} />}
       {isPlayer && open && <ResultPanel detail={d} />}
-      {m.status === 'Disputed' && <p className="notice">A moderator is reviewing this match. You will be notified of the decision.</p>}
+      {isPlayer && m.status === 'Disputed' && <p className="notice">A moderator is reviewing this match. You will be notified of the decision.</p>}
       {d.viewer !== 'Public' && <History detail={d} />}
       {d.viewer === 'Moderator' && <ModeratorPanel detail={d} />}
       {isPlayer && open && <ReportProblem detail={d} />}

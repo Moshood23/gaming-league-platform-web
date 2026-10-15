@@ -118,7 +118,7 @@ export function AdminSeasonPage() {
         </div>
       )}
 
-      {s.status !== 'Draft' && <RegistrationsPanel seasonId={s.id} />}
+      {s.status !== 'Draft' && <RegistrationsPanel seasonId={s.id} active={s.status === 'Active'} />}
       {s.status !== 'Draft' && s.status !== 'Cancelled' && s.status !== 'Completed' && <StaffPanel seasonId={s.id} />}
 
       {s.status !== 'Cancelled' && s.status !== 'Completed' && (
@@ -208,22 +208,29 @@ interface Registration {
   paidKobo: number
 }
 
-function RegistrationsPanel({ seasonId }: { seasonId: string }) {
+function RegistrationsPanel({ seasonId, active }: { seasonId: string; active: boolean }) {
+  const queryClient = useQueryClient()
   const registrations = useQuery({
     queryKey: ['season-registrations', seasonId],
     queryFn: () => api<Registration[]>(`/api/admin/seasons/${seasonId}/registrations`),
+  })
+  const disqualify = useMutation({
+    mutationFn: ({ userId, reason }: { userId: string; reason: string }) =>
+      api(`/api/moderation/seasons/${seasonId}/players/${userId}/disqualify`, { method: 'POST', json: { reason } }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['season-registrations', seasonId] }),
   })
 
   return (
     <div className="card">
       <h2>Players</h2>
-      <FormError error={registrations.error} />
+      <FormError error={registrations.error ?? disqualify.error} />
       <table className="table">
         <thead>
           <tr>
             <th>Club</th>
             <th>Status</th>
             <th>Paid</th>
+            {active && <th />}
           </tr>
         </thead>
         <tbody>
@@ -232,6 +239,22 @@ function RegistrationsPanel({ seasonId }: { seasonId: string }) {
               <td>{r.clubName}</td>
               <td>{r.status}</td>
               <td>{formatNaira(r.paidKobo)}</td>
+              {active && (
+                <td>
+                  {r.status === 'Confirmed' && (
+                    <button
+                      type="button"
+                      className="link-button"
+                      onClick={() => {
+                        const reason = prompt(`Disqualify ${r.clubName}? Their unfinished matches become 3–0 losses. Reason:`)
+                        if (reason) disqualify.mutate({ userId: r.userId, reason })
+                      }}
+                    >
+                      Disqualify
+                    </button>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

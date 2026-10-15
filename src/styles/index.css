@@ -447,3 +447,14 @@ textarea {
   border-radius: 0.4rem;
   border: 1px solid var(--border);
 }
+
+.radio {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.radio input {
+  margin-top: 0.3rem;
+}

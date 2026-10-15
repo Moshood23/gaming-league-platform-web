@@ -15,6 +15,7 @@ export function Layout() {
         </Link>
         <nav>
           <NavLink to="/seasons">Seasons</NavLink>
+          {user?.roles.some((r) => r === 'Moderator' || r === 'Administrator') && <NavLink to="/moderation">Disputes</NavLink>}
           {user?.roles.includes('Administrator') && <NavLink to="/admin/seasons">Admin</NavLink>}
           {user ? (
             <>

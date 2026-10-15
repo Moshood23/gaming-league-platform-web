@@ -10,6 +10,7 @@ import { RegisterPage } from '../features/auth/RegisterPage'
 import { ResetPasswordPage } from '../features/auth/ResetPasswordPage'
 import { HomePage } from '../features/home/HomePage'
 import { MatchPage } from '../features/matches/MatchPage'
+import { ModerationQueuePage } from '../features/moderation/ModerationQueuePage'
 import { ProfilePage } from '../features/profile/ProfilePage'
 import { DevCheckoutPage } from '../features/registrations/DevCheckoutPage'
 import { PaymentReturnPage } from '../features/registrations/PaymentReturnPage'
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
           // The fake checkout only exists in development builds.
           ...(import.meta.env.DEV ? [{ path: '/dev/checkout', element: <DevCheckoutPage /> }] : []),
         ],
+      },
+      {
+        element: <RequireAuth role={['Moderator', 'Administrator']} />,
+        children: [{ path: '/moderation', element: <ModerationQueuePage /> }],
       },
       {
         element: <RequireAuth role="Administrator" />,
