@@ -26,7 +26,7 @@ export function HomePage() {
       {user ? (
         user.clubName ? (
           <p>
-            Welcome back, <strong>{user.clubName}</strong>. Seasons are coming soon.
+            Welcome back, <strong>{user.clubName}</strong>. <Link to="/seasons">See the seasons</Link>.
           </p>
         ) : (
           <p>
@@ -34,9 +34,12 @@ export function HomePage() {
           </p>
         )
       ) : (
-        <p>
+        <p className="row">
           <Link to="/register" className="button">
             Create an account
+          </Link>
+          <Link to="/seasons" className="button secondary">
+            See the seasons
           </Link>
         </p>
       )}

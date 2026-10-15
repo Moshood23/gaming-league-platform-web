@@ -14,9 +14,13 @@ export function Layout() {
           Gaming League
         </Link>
         <nav>
+          <NavLink to="/seasons">Seasons</NavLink>
+          {user?.roles.includes('Administrator') && <NavLink to="/admin/seasons">Admin</NavLink>}
           {user ? (
             <>
-              <NavLink to="/profile">{user.clubName ?? 'Profile'}</NavLink>
+              <NavLink to="/profile" className="nav-club">
+                {user.clubName ?? 'Profile'}
+              </NavLink>
               <button
                 type="button"
                 className="link-button"
