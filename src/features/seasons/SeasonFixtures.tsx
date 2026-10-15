@@ -3,6 +3,7 @@ import { FormError } from '../../components/Form'
 import { api } from '../../lib/api'
 import { useCurrentUser } from '../auth/useCurrentUser'
 import { FixtureList } from '../matches/FixtureList'
+import { StandingsTable } from '../standings/StandingsTable'
 import type { MatchSummary } from '../matches/types'
 import type { SeasonStatus } from './types'
 
@@ -21,6 +22,7 @@ export function SeasonFixtures({ seasonId, status }: { seasonId: string; status:
 
   return (
     <>
+      <StandingsTable seasonId={seasonId} />
       <h2>Fixtures</h2>
       <FormError error={matches.error} />
       {matches.data && <FixtureList matches={matches.data} me={user?.id} />}

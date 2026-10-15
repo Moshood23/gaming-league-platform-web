@@ -37,6 +37,10 @@ export function AdminSeasonPage() {
       void queryClient.invalidateQueries({ queryKey: ['season-registrations', seasonId] })
     },
   })
+  const complete = useMutation({
+    mutationFn: () => api<Season>(`/api/admin/seasons/${seasonId}/complete`, { method: 'POST' }),
+    onSuccess: (updated) => queryClient.setQueryData(key, updated),
+  })
   const [reason, setReason] = useState('')
   const cancel = useMutation({
     mutationFn: () => api(`/api/admin/seasons/${seasonId}/cancel`, { method: 'POST', json: { reason } }),
@@ -114,6 +118,17 @@ export function AdminSeasonPage() {
             }}
           >
             Close registration
+          </button>
+        </div>
+      )}
+
+      {s.status === 'Active' && (
+        <div className="card">
+          <h2>Complete the season</h2>
+          <p>This happens automatically once every match is settled. The final table is then saved and cannot change.</p>
+          <FormError error={complete.error} />
+          <button type="button" className="secondary" disabled={complete.isPending} onClick={() => complete.mutate()}>
+            Complete now
           </button>
         </div>
       )}

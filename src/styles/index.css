@@ -458,3 +458,58 @@ textarea {
 .radio input {
   margin-top: 0.3rem;
 }
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.standings td,
+.standings th {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.standings td:nth-child(2),
+.standings th:nth-child(2) {
+  text-align: left;
+  white-space: normal;
+}
+
+.standings tr.mine {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.standings .wide {
+  display: none;
+}
+
+@media (min-width: 30rem) {
+  .standings .wide {
+    display: table-cell;
+  }
+}
+
+.form span {
+  display: inline-block;
+  width: 1.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.form-W {
+  color: var(--success);
+}
+
+.form-L {
+  color: var(--danger);
+}
+
+.champion {
+  flex-direction: row;
+  align-items: center;
+  border-color: var(--accent);
+}
+
+.trophy {
+  font-size: 1.8rem;
+}
