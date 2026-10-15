@@ -1,6 +1,7 @@
 import { useParams } from 'react-router'
 import { FormError } from '../../components/Form'
 import { JoinPanel } from '../registrations/JoinPanel'
+import { SeasonFixtures } from './SeasonFixtures'
 import { formatDateTime, formatNaira } from '../../lib/format'
 import { PrizeTable } from './PrizeSummary'
 import { prizeHeadline, useSeason } from './seasonUtils'
@@ -45,6 +46,8 @@ export function SeasonPage() {
           Win {s.pointsForWin} · Draw {s.pointsForDraw} · Loss {s.pointsForLoss}
         </dd>
       </dl>
+
+      <SeasonFixtures seasonId={s.id} status={s.status} />
 
       <h2>Prize split</h2>
       <p className="hint">The split depends on how many players pay. The exact amounts are published when registration closes.</p>

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router'
 import { useCurrentUser } from '../auth/useCurrentUser'
+import { MyMatches } from '../matches/MyMatches'
 
 function useServerStatus() {
   return useQuery({
@@ -22,6 +23,8 @@ export function HomePage() {
     <section>
       <h1>Online eFootball leagues</h1>
       <p>Join a season, play your fixtures on eFootball mobile, and compete for the prize.</p>
+
+      {user && <MyMatches />}
 
       {user ? (
         user.clubName ? (

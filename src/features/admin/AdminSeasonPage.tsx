@@ -30,6 +30,13 @@ export function AdminSeasonPage() {
     mutationFn: () => api<Season>(`/api/admin/seasons/${seasonId}/open-registration`, { method: 'POST' }),
     onSuccess: (s) => queryClient.setQueryData(key, s),
   })
+  const close = useMutation({
+    mutationFn: () => api<Season>(`/api/admin/seasons/${seasonId}/close-registration`, { method: 'POST' }),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(key, updated)
+      void queryClient.invalidateQueries({ queryKey: ['season-registrations', seasonId] })
+    },
+  })
   const [reason, setReason] = useState('')
   const cancel = useMutation({
     mutationFn: () => api(`/api/admin/seasons/${seasonId}/cancel`, { method: 'POST', json: { reason } }),
@@ -88,6 +95,26 @@ export function AdminSeasonPage() {
           </dl>
           <PrizeTable season={s} />
           {s.cancelledReason && <p className="form-error">Cancelled: {s.cancelledReason}</p>}
+        </div>
+      )}
+
+      {s.status === 'RegistrationOpen' && (
+        <div className="card">
+          <h2>Close registration now</h2>
+          <p>
+            Normally this happens automatically at {formatDateTime(s.registrationClosesAt)}. Closing fixes the prize and draws the fixtures; with fewer than{' '}
+            {s.minPlayers} players the season is cancelled and everyone refunded.
+          </p>
+          <FormError error={close.error} />
+          <button
+            type="button"
+            disabled={close.isPending}
+            onClick={() => {
+              if (confirm('Close registration now?')) close.mutate()
+            }}
+          >
+            Close registration
+          </button>
         </div>
       )}
 

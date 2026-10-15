@@ -341,3 +341,59 @@ button.danger {
 .notice-success {
   border-color: var(--success);
 }
+
+.round-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.match-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  padding: 0.5rem 0.25rem;
+  border-top: 1px solid var(--border);
+  color: inherit;
+  text-decoration: none;
+}
+
+.match-row.mine {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-radius: 0.4rem;
+}
+
+.match-row .team {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-row .team.right {
+  text-align: right;
+}
+
+.match-row .score,
+.match-row .vs {
+  font-weight: 700;
+  text-align: center;
+  min-width: 3rem;
+}
+
+.match-row .vs {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.match-status {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.status-Disputed {
+  color: var(--danger);
+}
