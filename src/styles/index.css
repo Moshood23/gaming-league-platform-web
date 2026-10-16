@@ -566,3 +566,12 @@ textarea {
 .pre-wrap {
   white-space: pre-wrap;
 }
+
+/* Development inbox: an email shown as it would look, never run. */
+.email-preview {
+  width: 100%;
+  min-height: 220px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}

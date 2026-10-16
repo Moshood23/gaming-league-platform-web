@@ -42,9 +42,12 @@ If your API runs on another address, set `API_URL` in the terminal before `npm r
 
 ### 4. Try it
 
-- **Emails aren't sent in development.** Confirmation, reset and notification emails appear in the API's console; copy the link from there.
-- **Payments aren't real in development.** "Join" opens a test checkout page with a **Pay (test)** button. This page only exists in `npm run dev`, never in the production build.
-- **To become an administrator:** see "Try it" in the API README.
+Open **Dev tools** in the menu (http://localhost:5173/dev). These tools only exist in `npm run dev`; production builds leave them out.
+
+- **Inbox** (http://localhost:5173/dev/emails). Emails aren't sent in development. Confirmation, reset and notification emails appear here, with their links ready to click.
+- **Create demo data.** Adds a demo league: an administrator, six players, a season in progress and a season open for registration. Click a club to log in as it; every demo account uses the password `DemoPass1`.
+- **Make me administrator.** Gives the account you're logged in with the Administrator role.
+- **Payments aren't real in development.** "Join" opens a test checkout page with a **Pay (test)** button.
 
 ## Commands
 

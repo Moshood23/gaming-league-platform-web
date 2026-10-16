@@ -4,6 +4,8 @@ import { AdminSeasonPage } from '../features/admin/AdminSeasonPage'
 import { AdminSeasonsPage } from '../features/admin/AdminSeasonsPage'
 import { AdminUsersPage } from '../features/admin/AdminUsersPage'
 import { NewSeasonPage } from '../features/admin/NewSeasonPage'
+import { DevInboxPage } from '../features/dev/DevInboxPage'
+import { DevToolsPage } from '../features/dev/DevToolsPage'
 import { ConfirmEmailPage } from '../features/auth/ConfirmEmailPage'
 import { ForgotPasswordPage, ResendConfirmationPage } from '../features/auth/EmailOnlyForm'
 import { LoginPage } from '../features/auth/LoginPage'
@@ -35,6 +37,13 @@ export const router = createBrowserRouter([
       { path: '/seasons', element: <SeasonsPage /> },
       { path: '/seasons/:seasonId', element: <SeasonPage /> },
       { path: '/matches/:matchId', element: <MatchPage /> },
+      // Development tools (inbox, demo data) only exist in development builds.
+      ...(import.meta.env.DEV
+        ? [
+            { path: '/dev', element: <DevToolsPage /> },
+            { path: '/dev/emails', element: <DevInboxPage /> },
+          ]
+        : []),
       {
         element: <RequireAuth />,
         children: [
