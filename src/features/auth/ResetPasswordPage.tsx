@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { Field, FormError, Notice } from '../../components/Form'
 import { api, fieldError } from '../../lib/api'
+import { meetsPasswordPolicy, PasswordChecklist } from './PasswordChecklist'
 
 export function ResetPasswordPage() {
   const [params] = useSearchParams()
@@ -44,10 +45,10 @@ export function ResetPasswordPage() {
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
         error={fieldError(reset.error, 'newPassword')}
-        hint="At least 8 characters, with an upper-case letter, a lower-case letter and a number."
       />
+      <PasswordChecklist password={newPassword} />
       {!fieldError(reset.error, 'newPassword') && <FormError error={reset.error} />}
-      <button type="submit" disabled={reset.isPending}>
+      <button type="submit" disabled={reset.isPending || !meetsPasswordPolicy(newPassword)}>
         Change password
       </button>
     </form>

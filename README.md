@@ -45,7 +45,7 @@ If your API runs on another address, set `API_URL` in the terminal before `npm r
 Open **Dev tools** in the menu (http://localhost:5173/dev). These tools only exist in `npm run dev`; production builds leave them out.
 
 - **Inbox** (http://localhost:5173/dev/emails). Emails aren't sent in development. Confirmation, reset and notification emails appear here, with their links ready to click.
-- **Create demo data.** Adds a demo league: an administrator, six players, a season in progress and a season open for registration. Click a club to log in as it; every demo account uses the password `DemoPass1`.
+- **Create demo data.** Adds a demo league: an administrator, six players, a season in progress and a season open for registration. Click a club to log in as it; every demo account uses the password `DemoPass1!`.
 - **Make me administrator.** Gives the account you're logged in with the Administrator role.
 - **Payments aren't real in development.** "Join" opens a test checkout page with a **Pay (test)** button.
 

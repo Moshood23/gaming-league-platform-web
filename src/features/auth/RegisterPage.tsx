@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { Field, FormError, Notice } from '../../components/Form'
 import { api, fieldError } from '../../lib/api'
+import { meetsPasswordPolicy, PasswordChecklist } from './PasswordChecklist'
 
 export function RegisterPage() {
   const [email, setEmail] = useState('')
@@ -44,10 +45,10 @@ export function RegisterPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         error={fieldError(register.error, 'password')}
-        hint="At least 8 characters, with an upper-case letter, a lower-case letter and a number."
       />
+      <PasswordChecklist password={password} />
       {!fieldError(register.error, 'email') && !fieldError(register.error, 'password') && <FormError error={register.error} />}
-      <button type="submit" disabled={register.isPending}>
+      <button type="submit" disabled={register.isPending || !meetsPasswordPolicy(password)}>
         {register.isPending ? 'Creating account…' : 'Sign up'}
       </button>
       <p>

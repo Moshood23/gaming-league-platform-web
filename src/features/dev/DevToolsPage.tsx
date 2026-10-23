@@ -11,7 +11,7 @@ interface DemoDataResult {
 }
 
 /** The accounts the demo data creates (see DemoDataSeeder in the API). */
-const demoPassword = 'DemoPass1'
+const demoPassword = 'DemoPass1!'
 const demoAccounts = [
   { email: 'admin@demo.local', label: 'Administrator' },
   { email: 'ikeja.strikers@demo.local', label: 'Ikeja Strikers' },
