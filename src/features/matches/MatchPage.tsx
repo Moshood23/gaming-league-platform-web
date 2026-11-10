@@ -5,7 +5,7 @@ import { Field, FormError } from '../../components/Form'
 import { api, fieldError } from '../../lib/api'
 import { formatDateTime } from '../../lib/format'
 import { ModeratorPanel } from '../moderation/ModeratorPanel'
-import { disputeCategoryLabel, matchStatusLabel, type DisputeCategory, type MatchDetail } from './types'
+import { disputeCategoryLabel, matchStatusLabel, type DisputeCategory, type MatchDetail, type ScreenshotCheck } from './types'
 
 export function MatchPage() {
   const { matchId } = useParams()
@@ -99,7 +99,11 @@ function ResultPanel({ detail }: { detail: MatchDetail }) {
             {m.playerA.clubName} {theirs.scoreA}–{theirs.scoreB} {m.playerB.clubName}
           </p>
           <EvidenceThumbs detail={detail} submissionId={theirs.id} />
-          <p className="hint">If you do nothing it is confirmed automatically at {formatDateTime(theirs.confirmationDueAt)}.</p>
+          <p className="hint">
+            {needsModerator(detail, theirs.id)
+              ? `If you do nothing, a moderator decides the result after ${formatDateTime(theirs.confirmationDueAt)}, because the screenshot doesn't support it.`
+              : `If you do nothing it is confirmed automatically at ${formatDateTime(theirs.confirmationDueAt)}.`}
+          </p>
           <FormError error={confirm.error} />
           <button type="button" disabled={confirm.isPending} onClick={() => confirm.mutate()}>
             Confirm this score
@@ -209,12 +213,48 @@ export function EvidenceThumbs({ detail, submissionId, disputeId }: { detail: Ma
   return (
     <div className="thumbs">
       {items.map((e) => (
-        <a key={e.id} href={`/api/evidence/${e.id}`} target="_blank" rel="noreferrer">
-          <img src={`/api/evidence/${e.id}`} alt={`Evidence: ${e.kind}`} loading="lazy" />
-        </a>
+        <figure key={e.id}>
+          <a href={`/api/evidence/${e.id}`} target="_blank" rel="noreferrer">
+            <img src={`/api/evidence/${e.id}`} alt={`Evidence: ${e.kind}`} loading="lazy" />
+          </a>
+          <CheckNote check={e.check} />
+        </figure>
       ))}
     </div>
   )
+}
+
+/** Whether a report's screenshot doesn't support it, so it goes to a moderator instead of being confirmed automatically. */
+function needsModerator(detail: MatchDetail, submissionId: string) {
+  return detail.evidence.some((e) => e.submissionId === submissionId && (e.check.status === 'ScoreMismatch' || e.check.status === 'NotAScoreScreen'))
+}
+
+/** What the automatic check found on an end-of-match screenshot, if it ran. */
+function CheckNote({ check }: { check: ScreenshotCheck }) {
+  const shown = `${check.homeClub ?? 'Home'} ${check.homeScore ?? '?'}–${check.awayScore ?? '?'} ${check.awayClub ?? 'Away'}`
+  const toModerator = "If it isn't confirmed, a moderator will decide."
+  switch (check.status) {
+    case 'Pending':
+      return <figcaption className="check">Checking the screenshot…</figcaption>
+    case 'Matches':
+      return <figcaption className="check" data-state="ok">✓ Shows {shown}, as reported.</figcaption>
+    case 'ScoreMismatch':
+      return (
+        <figcaption className="check" data-state="warning">
+          ⚠ Seems to show {shown}, not the reported score. {toModerator}
+        </figcaption>
+      )
+    case 'NotAScoreScreen':
+      return (
+        <figcaption className="check" data-state="warning">
+          ⚠ Doesn't look like an eFootball final score screen. {toModerator}
+        </figcaption>
+      )
+    case 'Unreadable':
+      return <figcaption className="check">The score on this screenshot couldn't be read clearly.</figcaption>
+    default:
+      return null
+  }
 }
 
 function History({ detail }: { detail: MatchDetail }) {

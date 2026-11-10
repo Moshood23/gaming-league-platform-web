@@ -47,6 +47,15 @@ export interface Submission {
   confirmationDueAt: string
 }
 
+/** What the automatic check read from an end-of-match screenshot (home = the team on the left). */
+export interface ScreenshotCheck {
+  status: 'NotChecked' | 'Pending' | 'Matches' | 'ScoreMismatch' | 'NotAScoreScreen' | 'Unreadable' | 'Failed'
+  homeClub: string | null
+  awayClub: string | null
+  homeScore: number | null
+  awayScore: number | null
+}
+
 export interface Evidence {
   id: string
   uploadedByUserId: string
@@ -54,6 +63,7 @@ export interface Evidence {
   createdAt: string
   submissionId: string | null
   disputeId: string | null
+  check: ScreenshotCheck
 }
 
 export interface Dispute {

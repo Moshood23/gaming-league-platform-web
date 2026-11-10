@@ -440,6 +440,27 @@ textarea {
   margin-top: 0.35rem;
 }
 
+.thumbs figure {
+  margin: 0;
+  max-width: 16rem;
+}
+
+/* The automatic screenshot check, under each end-of-match screenshot. */
+.check {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.check[data-state='ok'] {
+  color: var(--success);
+}
+
+.check[data-state='warning'] {
+  color: var(--danger);
+  font-weight: 600;
+}
+
 .thumbs img {
   width: 6rem;
   height: 6rem;
